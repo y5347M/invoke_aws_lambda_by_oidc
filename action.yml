@@ -1,0 +1,41 @@
+name: 'Invoke AWS Lambda by OIDC'
+description: 'Invoke AWS Lambda By OIDC'
+author: "y5347M"
+inputs:
+  aws-region:
+    description: 'Which AWS region to use'
+    required: true
+  role-to-assume:
+    description: The Amazon Resource Name (ARN) of the role to assume. Use the provided credentials to assume an IAM role and configure the Actions environment with the assumed role credentials rather than with the provided credentials.
+    required: true
+  function-name:
+    description: Lambda function name
+    required: true
+  payload:
+    description: Lambda payload
+    required: true
+outputs:
+  lambda-invoke-response:
+    description: 'The result of the Lambda function'
+    value: ${{ steps.set-output.outputs.lambda-invoke-response }}
+runs:
+  using: 'composite'
+  steps:
+    - uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ inputs.role-to-assume }}
+        aws-region: ${{ inputs.aws-region }}
+
+    - name: Invoke Lambda Function
+      id: invoke
+      run: aws lambda invoke --function-name ${{ inputs.function-name }} --payload ${{ inputs.payload }} output.json --log-type Tail
+      shell: bash
+
+    - name: Display Lambda Invoke Result
+      run: cat output.json
+      shell: bash
+    
+    - name: Set Output
+      id: set-output
+      run: echo "lambda-invoke-response=$(cat output.json)" >> $GITHUB_OUTPUT
+      shell: bash
