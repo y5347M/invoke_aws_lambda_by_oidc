@@ -28,7 +28,7 @@ runs:
 
     - name: Invoke Lambda Function
       id: invoke
-      run: aws lambda invoke --function-name ${{ inputs.function-name }} --payload ${{ inputs.payload }} output.json --log-type Tail
+      run: aws lambda invoke --function-name ${{ inputs.function-name }} --payload ${{ inputs.payload }} --log-type Tail output.json
       shell: bash
 
     - name: Display Lambda Invoke Result
