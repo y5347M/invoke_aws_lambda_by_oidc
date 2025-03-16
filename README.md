@@ -10,7 +10,7 @@ To use this action in your GitHub workflow, add the following step to your YAML 
 
 ```yaml
 - name: Invoke AWS Lambda by OIDC
-  uses: y5347M/invoke_aws_lambda_by_oidc@v1.1.0
+  uses: y5347M/invoke_aws_lambda_by_oidc@v1.1.1
   with:
     aws-region: 'us-west-2'
     role-to-assume: 'arn:aws:iam::123456789012:role/MyRole'
@@ -47,7 +47,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Invoke AWS Lambda by OIDC
-      uses: y5347M/invoke_aws_lambda_by_oidc@v1.1.0
+      uses: y5347M/invoke_aws_lambda_by_oidc@v1.1.1
       with:
         aws-region: 'us-west-2'
         role-to-assume: 'arn:aws:iam::123456789012:role/MyRole'
