@@ -10,12 +10,13 @@ To use this action in your GitHub workflow, add the following step to your YAML 
 
 ```yaml
 - name: Invoke AWS Lambda by OIDC
-  uses: y5347M/invoke_aws_lambda_by_oidc@v1.0.1
+  uses: y5347M/invoke_aws_lambda_by_oidc@v1.0.2
   with:
     aws-region: 'us-west-2'
     role-to-assume: 'arn:aws:iam::123456789012:role/MyRole'
     function-name: 'my-lambda-function'
     payload: '{"key1":"value1","key2":"value2"}'
+    additional-parameters: '--color auto' # optional
 ```
 
 ## Inputs
@@ -46,15 +47,16 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Invoke AWS Lambda by OIDC
-      uses: y5347M/invoke_aws_lambda_by_oidc@v1.0.1
+      uses: y5347M/invoke_aws_lambda_by_oidc@v1.0.2
       with:
         aws-region: 'us-west-2'
         role-to-assume: 'arn:aws:iam::123456789012:role/MyRole'
         function-name: 'my-lambda-function'
         payload: '{"key1":"value1","key2":"value2"}'
+        additional-parameters: '--color auto' # optional
 
     - name: Output Lambda Response
-      run: echo "Lambda Response: ${{ steps.invoke.outputs.lambda-invoke-response }}"
+      run: echo "Lambda Response: ${{ steps.set-output.outputs.lambda-invoke-response }}"
 ```
 
 ## Contributing

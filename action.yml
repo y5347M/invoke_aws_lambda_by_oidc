@@ -14,6 +14,9 @@ inputs:
   payload:
     description: Lambda payload
     required: true
+  additional-parameters:
+    description: 'Additional parameters for the aws lambda invoke command（e.g. --color auto）')'
+    required: false
 outputs:
   lambda-invoke-response:
     description: 'The result of the Lambda function'
@@ -28,7 +31,7 @@ runs:
 
     - name: Invoke Lambda Function
       id: invoke
-      run: aws lambda invoke --function-name ${{ inputs.function-name }} --payload ${{ inputs.payload }} --log-type Tail output.json
+      run: aws lambda invoke --function-name ${{ inputs.function-name }} --payload ${{ inputs.payload }} --log-type Tail ${{ inputs.additional-parameters }} output.json
       shell: bash
 
     - name: Display Lambda Invoke Result
