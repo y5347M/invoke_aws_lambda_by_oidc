@@ -31,7 +31,15 @@ runs:
 
     - name: Invoke Lambda Function
       id: invoke
-      run: aws lambda invoke --function-name ${{ inputs.function-name }} --payload ${{ inputs.payload }} --log-type Tail ${{ inputs.additional-parameters }} output.json
+      run: |
+        payload=${{ inputs.payload }}
+        echo $payload > payload.json
+        aws lambda invoke \
+          --function-name ${{ inputs.function-name }} \
+          --payload "$(echo file://payload.json | jq -c .)" \
+          --log-type Tail \
+          --cli-binary-format raw-in-base64-out ${{ inputs.additional-parameters }} \
+          output.json
       shell: bash
 
     - name: Display Lambda Invoke Result
