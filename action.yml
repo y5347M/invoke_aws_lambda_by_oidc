@@ -15,7 +15,7 @@ inputs:
     description: Lambda payload
     required: true
   additional-parameters:
-    description: 'Additional parameters for the aws lambda invoke command（e.g. --color auto）')'
+    description: 'Additional parameters for the aws lambda invoke command（e.g. --color auto）'
     required: false
 outputs:
   lambda-invoke-response:
